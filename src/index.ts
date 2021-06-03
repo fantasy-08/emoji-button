@@ -110,7 +110,9 @@ export class EmojiButton {
 
   private emojiCategories: { [key: string]: EmojiRecord[] };
 
-  constructor(options: EmojiButtonOptions = {}) {
+  constructor(options: EmojiButtonOptions = {},
+    emojiFilter: (emoji:EmojiRecord)=>any
+  ) {
     this.pickerVisible = false;
 
     this.options = { ...DEFAULT_OPTIONS, ...options };
@@ -129,7 +131,7 @@ export class EmojiButton {
     this.theme = this.options.theme || 'light';
 
     this.emojiCategories = buildEmojiCategoryData(
-      this.options.emojiData || emojiData
+      this.options.emojiData || emojiData, emojiFilter
     );
 
     this.buildPicker();

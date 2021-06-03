@@ -26,21 +26,25 @@ export function formatEmojiName(name: string): string {
   return words.join(' ');
 }
 
+
 export function buildEmojiCategoryData(
-  emojiData: EmojiData
+  emojiData: EmojiData,
+  emojiFilter: (emoji:EmojiRecord)=>any
 ): { [key: string]: EmojiRecord[] } {
   const emojiCategories = {};
 
   emojiData.emoji.forEach(emoji => {
-    let categoryList =
+    if (emojiFilter(emoji)) {
+      let categoryList =
       emojiCategories[emojiData.categories[emoji.category || 0]];
-    if (!categoryList) {
-      categoryList = emojiCategories[
-        emojiData.categories[emoji.category || 0]
-      ] = [];
-    }
+      if (!categoryList) {
+        categoryList = emojiCategories[
+          emojiData.categories[emoji.category || 0]
+        ] = [];
+      }
 
-    categoryList.push(emoji);
+      categoryList.push(emoji);
+    }    
   });
 
   return emojiCategories;
