@@ -44,7 +44,7 @@ export function buildEmojiCategoryData(
       }
 
       categoryList.push(emoji);
-    }    
+    }
   });
 
   return emojiCategories;

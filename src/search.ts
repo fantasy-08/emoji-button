@@ -62,12 +62,13 @@ export class Search {
     private i18n: I18NStrings,
     private options: EmojiButtonOptions,
     emojiData: EmojiRecord[],
-    categories: number[]
+    categories: number[],
+    emojiFilter : (emoji:EmojiRecord)=>any
   ) {
     this.emojisPerRow = this.options.emojisPerRow || 8;
     this.emojiData = emojiData.filter(
       e =>
-        e.version &&
+        emojiFilter(e) && e.version &&
         parseFloat(e.version) <= parseFloat(options.emojiVersion as string) &&
         e.category !== undefined &&
         categories.indexOf(e.category) >= 0

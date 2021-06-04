@@ -134,7 +134,7 @@ export class EmojiButton {
       this.options.emojiData || emojiData, emojiFilter
     );
 
-    this.buildPicker();
+    this.buildPicker(emojiFilter);
   }
 
   /**
@@ -304,7 +304,7 @@ export class EmojiButton {
   /**
    * Builds the search UI.
    */
-  private buildSearch(): void {
+  private buildSearch(emojiFilter: (emoji:EmojiRecord)=>any): void {
     if (this.options.showSearch) {
       this.search = new Search(
         this.events,
@@ -313,7 +313,8 @@ export class EmojiButton {
         this.options.emojiData?.emoji || emojiData.emoji,
         (this.options.categories || []).map(category =>
           (this.options.emojiData || emojiData).categories.indexOf(category)
-        )
+        ),
+        emojiFilter
       );
 
       this.pickerEl.appendChild(this.search.render());
@@ -367,7 +368,7 @@ export class EmojiButton {
   /**
    * Builds the emoji picker.
    */
-  private buildPicker(): void {
+  private buildPicker(emojiFilter: (emoji:EmojiRecord)=>any): void {
     this.pickerEl = createElement('div', CLASS_PICKER);
     this.pickerEl.classList.add(this.theme);
 
@@ -377,7 +378,7 @@ export class EmojiButton {
     this.pickerContent = createElement('div', CLASS_PICKER_CONTENT);
 
     this.initPlugins();
-    this.buildSearch();
+    this.buildSearch(emojiFilter);
 
     this.pickerEl.appendChild(this.pickerContent);
 
